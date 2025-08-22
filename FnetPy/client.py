@@ -75,7 +75,9 @@ class Client():
             "time": time,
         }
 
-        r = self.session.post(self.DATAGET, auth=self.session.auth, data=data, verify=certifi.where())
+        # r = self.session.post(self.DATAGET, auth=self.session.auth, data=data, verify=certifi.where())
+        # I tried to supply my own pem file path, but still is finding self-signed certs
+        r = self.session.post(self.DATAGET, auth=self.session.auth, data=data, verify=False)
         if r.status_code == 401:  # username is right, password is wrong
             sys.exit("Unauthorized! Please check your username and password!")
         elif r.status_code == 500:  # internal server error, or username is wrong
